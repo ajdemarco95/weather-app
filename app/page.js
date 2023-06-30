@@ -19,7 +19,12 @@ export default function Home() {
   };
 
   return (
-    <main>
+    <>
+      <div className="navbar">
+        <div className="flex-1">
+          <a className="btn btn-ghost normal-case text-xl">Weather App</a>
+        </div>
+      </div>
       <div className="m-5 flex items-center justify-center w-100">
         <input
           placeholder="Enter Zip Code..."
@@ -47,9 +52,9 @@ export default function Home() {
         )}
       </div>
       {!forecast && (
-        <p className="text-center">Add a zip code to view forecast...</p>
+        <p className="text-center">Add a zip code to view the forecast...</p>
       )}
       {forecast && <ViewForecast forecast={forecast} location={location} />}
-    </main>
+    </>
   );
 }
