@@ -1,30 +1,57 @@
 "use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export default async function Home() {
-  const [value, setValue] = useState();
+export default function Home() {
+  const [search, setSearch] = useState();
+  const [forecast, setForecast] = useState();
 
-  const handleSubmit = async (place) => {
-    let geoObj = {
-      lat: place.geometry.location.lat(),
-      lon: place.geometry.location.lng(),
-    };
-    let forecastUrl = `/api/weather?lat=${geoObj.lat}&lon=${geoObj.lon}`;
+  useEffect(() => {
+    if (search) {
+      console.log(search);
+    }
+  }, [search]);
 
-    // const res = await fetch(forecastUrl);
-    // const data = await res.json();
+  const handleSubmit = async () => {
+    let apiCallURL = `/api/weather?text=${search}`;
 
-    // console.log(data);
+    const res = await fetch(apiCallURL);
+    const data = await res.json();
+
+    setForecast(data.forecast);
+
+    console.log(data);
   };
 
   return (
     <main>
       <div className="m-5">
-        <button className="btn ml-5">Submit</button>
+        <p>Enter a zip code or address:</p>
+        <input
+          type="text"
+          className="input input-bordered w-full max-w-xs"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            handleSubmit();
+          }}
+          className="btn ml-5"
+        >
+          Submit
+        </button>
       </div>
       <div>
-        <p>test</p>
+        {forecast &&
+          forecast.map((item, index) => {
+            return (
+              <div key={index} className="">
+                {item.name}
+              </div>
+            );
+            console.log(item, index);
+          })}
       </div>
     </main>
   );
