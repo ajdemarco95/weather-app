@@ -19,14 +19,19 @@ export default function Home() {
     console.log(data);
   };
 
+  let floaterClassStr = "absolute m-auto left-0 right-0 bottom-1/2";
+
+  if (forecast) {
+    floaterClassStr = "absolute m-auto left-0 right-0 bottom-5";
+  }
   return (
-    <>
-      <div className="navbar">
+    <div className="bg-[url('/bg.jpg')] bg-center h-[100vh] bg-cover">
+      {/* <div className="navbar bg-white">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">Weatherfolio</a>
         </div>
-      </div>
-      <div className="absolute m-auto left-0 right-0 bottom-5">
+      </div> */}
+      <div className={floaterClassStr}>
         <FloaterInput
           search={search}
           setSearch={setSearch}
@@ -35,10 +40,7 @@ export default function Home() {
           handleSubmit={handleSubmit}
         />
       </div>
-      {!forecast && (
-        <p className="text-center">Add a zip code to view the forecast...</p>
-      )}
       {forecast && <ViewForecast forecast={forecast} location={location} />}
-    </>
+    </div>
   );
 }

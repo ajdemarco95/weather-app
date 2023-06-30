@@ -5,11 +5,11 @@ function ViewForecast(props) {
   const { forecast, location } = props;
   return (
     <>
-      <div className="text-center mb-10">
-        <p>
+      {/* <div className="text-center mb-2">
+        <p className="text-5xl text-white font-bold">
           {location.city}, {location.state}
         </p>
-      </div>
+      </div> */}
       <ForecastSlider forecast={forecast} />
     </>
   );

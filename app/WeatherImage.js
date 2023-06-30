@@ -15,7 +15,6 @@ function WeatherImage(props) {
   const { shortForecast, isDaytime } = props;
 
   const forecastWordArr = shortForecast.split(" ");
-  console.log(forecastWordArr);
 
   if (isDaytime) {
     if (forecastWordArr.includes("Thunderstorms")) {

@@ -5,7 +5,7 @@ function FloaterInput(props) {
   return (
     <>
       <div className="flex justify-center">
-        <div className="flex justify-center bg-blue-500 p-5 rounded-[25px]">
+        <div className="flex justify-center bg-gray-200/30 p-5 rounded-[25px] backdrop-blur-sm">
           <input
             placeholder="Enter Zip Code..."
             type="text"
