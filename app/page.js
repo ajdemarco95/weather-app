@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ViewForecast from "./ViewForecast";
+import FloaterInput from "./FloaterInput";
 
 export default function Home() {
   const [search, setSearch] = useState();
@@ -22,34 +23,17 @@ export default function Home() {
     <>
       <div className="navbar">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">Weather App</a>
+          <a className="btn btn-ghost normal-case text-xl">Weatherfolio</a>
         </div>
       </div>
-      <div className="m-5 flex items-center justify-center w-100">
-        <input
-          placeholder="Enter Zip Code..."
-          type="text"
-          className="input input-bordered w-full max-w-xs"
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
+      <div className="absolute m-auto left-0 right-0 bottom-5">
+        <FloaterInput
+          search={search}
+          setSearch={setSearch}
+          loading={loading}
+          setIsLoading={setIsLoading}
+          handleSubmit={handleSubmit}
         />
-        {loading && (
-          <button disabled className="btn ml-5">
-            <span className="loading loading-dots"></span>
-          </button>
-        )}
-        {!loading && (
-          <button
-            onClick={() => {
-              setIsLoading(true);
-              handleSubmit();
-            }}
-            className="btn ml-5"
-          >
-            Submit
-          </button>
-        )}
       </div>
       {!forecast && (
         <p className="text-center">Add a zip code to view the forecast...</p>
