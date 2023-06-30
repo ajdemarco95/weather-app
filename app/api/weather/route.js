@@ -1,25 +1,32 @@
 import { NextResponse } from "next/server";
 
-export async function GET(Request) {
-  // Get lat / lon data from input address
-  console.log(Request.nextUrl.searchParams);
+export async function GET(request) {
+  // Get address text from URL searchParams
+  const { searchParams } = new URL(request.url);
+  const searchQuery = searchParams.get("text");
+  const geoapifyAPIURL = `https://api.geoapify.com/v1/geocode/search?text=${searchQuery}&apiKey=${process.env.NEXT_PUBLIC_MAPS_API_KEY}`;
 
-  //Get forecast URL from provided link
+  //Fetch Geocoordinates from Geoapify.com Geocoding API
+  const geoRes = await fetch(geoapifyAPIURL);
+  const geoData = await geoRes.json();
+  console.log(geoData.features[0].properties.lat);
 
-  const lat = "39.7456";
-  const lon = "-97.0892";
+  //Set Lat & Lon based on geo response
+  const lat = geoData.features[0].properties.lat;
+  const lon = geoData.features[0].properties.lon;
+
+  //Get forecast URL from provided coordinates
+
   const NWSFetchString = `https://api.weather.gov/points/${lat},${lon}`;
 
   const res = await fetch(NWSFetchString);
+  console.log(NWSFetchString);
 
   if (!res.ok) {
-    throw new Error("HELP!");
+    throw new Error(res.status);
   }
 
   const data = await res.json();
-
-  // console.log(data.properties.relativeLocation);
-
   const forecastUrl = data.properties.forecast;
 
   //Get forecast data from Gov Provided Link
